@@ -1,0 +1,33 @@
+{
+  "name": "h5-vue-scroller",
+  "version": "0.1.1",
+  "main": "dist/h5-vue-scroller.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "author": "falstack <icesilt@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/falstack/h5-vue-scroller/issues"
+  },
+  "homepage": "https://github.com/falstack/h5-vue-scroller",
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name h5-vue-scroller src/scroller.js",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "babel-eslint": "^10.0.1",
+    "core-js": "^2.6.5",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
