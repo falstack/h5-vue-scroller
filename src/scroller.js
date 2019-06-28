@@ -10,6 +10,10 @@ export default {
     throttle: {
       type: Number,
       default: 0
+    },
+    tag: {
+      type: String,
+      default: 'div'
     }
   },
   data() {
@@ -33,7 +37,7 @@ export default {
       }
     }
     return h(
-      'div',
+      this.tag,
       {
         style: {
           height: '100%',
