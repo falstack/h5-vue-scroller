@@ -1,9 +1,15 @@
+import { throttle as throttleFn } from 'throttle-debounce'
+
 export default {
   name: 'VScroller',
   props: {
     preload: {
       type: Number,
       default: 50
+    },
+    throttle: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -13,6 +19,19 @@ export default {
     }
   },
   render: function(h) {
+    const events = {
+      touchstart: this.handleStart
+    }
+    const { throttle } = this
+    if (throttle >= 0) {
+      if (throttle === 0) {
+        events.scroll = this.handleScroll
+        events.touchmove = this.handleMove
+      } else {
+        events.scroll = throttleFn(throttle, this.handleScroll)
+        events.touchmove = throttleFn(throttle, this.handleMove)
+      }
+    }
     return h(
       'div',
       {
@@ -22,11 +41,7 @@ export default {
           '-webkit-overflow-scrolling': 'touch'
         },
         class: 'v-scroller',
-        on: {
-          scroll: this.handleScroll,
-          touchstart: this.handleStart,
-          touchmove: this.handleMove
-        }
+        on: events
       },
       this.$slots.default
     )

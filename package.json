@@ -1,6 +1,6 @@
 {
   "name": "h5-vue-scroller",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/h5-vue-scroller.umd.min.js",
   "files": [
     "dist"
@@ -17,6 +17,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "throttle-debounce": "^2.1.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
