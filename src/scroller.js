@@ -39,14 +39,16 @@ export default {
   render: function(h) {
     const events = {}
     const { throttle } = this
-    if (throttle > 0) {
-      events.scroll = throttleFn(throttle, this.handleScroll)
-    } else {
-      events.scroll = this.handleScroll
+    if (throttle >= 0) {
+      if (throttle > 0) {
+        events.scroll = throttleFn(throttle, this.handleScroll)
+      } else {
+        events.scroll = this.handleScroll
+      }
+      events.touchstart = this.handleStart
+      events.touchmove = this.handleMove
+      events.touchend = this.handleEnd
     }
-    events.touchstart = this.handleStart
-    events.touchmove = this.handleMove
-    events.touchend = this.handleEnd
     return h(
       this.tag,
       {

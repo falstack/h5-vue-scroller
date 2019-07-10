@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to h5-vue-scroller 👋</h1>
 <p>
-  <img src="https://img.shields.io/badge/version-0.1.13-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/version-0.1.14-blue.svg?cacheSeconds=2592000" />
 </p>
 
 ### 🏠 [Homepage](https://github.com/falstack/h5-vue-scroller)
