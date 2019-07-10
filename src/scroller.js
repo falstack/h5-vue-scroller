@@ -78,6 +78,7 @@ export default {
     },
     handleStart(evt) {
       this.lastTouchY = evt.touches ? evt.touches[0].pageY : evt.pageY
+      this.fixedIOS()
     },
     handleMove(evt) {
       const zoom =
@@ -119,6 +120,18 @@ export default {
         el = el.parentNode
       }
       evt.preventDefault()
+    },
+    fixedIOS() {
+      const el = this.$el
+      let top = el.scrollTop
+      let totalScroll = el.scrollHeight
+      let currentScroll = top + el.offsetHeight
+
+      if (top === 0) {
+        el.scrollTop = 1
+      } else if (currentScroll === totalScroll) {
+        el.scrollTop = top - 1
+      }
     }
   }
 }
