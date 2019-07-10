@@ -67,8 +67,8 @@ export default {
     },
     handleMove(event) {
       const currentY = event.touches[0].clientY
-      const offset = this.lastTouchY - currentY
-      if (offset && event.target.scrollTop <= 0) {
+      const offset = currentY - this.lastTouchY
+      if (offset > 0 && this.lastScrollTop <= 0) {
         this.refreshing = true
         this.$emit('refresh', { event, offset })
       }
