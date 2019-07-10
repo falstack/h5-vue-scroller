@@ -16,7 +16,8 @@ Vue.component(VScroller.name, VScroller)
 ```vue
 <v-scroller
   tag="ul"
-  :preload="50"
+  :preload-top="50"
+  :preload-bottom="50"
   :throttle="0"
   @scroll-down="handleScrollDown"
   @scroll-up="handleScrollUp"
@@ -28,9 +29,10 @@ Vue.component(VScroller.name, VScroller)
 ```
 
 ### props
-1. preload：触发 top, bottom 的距离（px），默认`50`
-2. throttle: 事件派发的频率，默认`0`不限流，如果设置为 < 0，则不派发事件
-3. tag：指定容器的元素，默认是`div`
+1. preload-top：触发 top 的距离（px），默认`50`
+2. preload-bottom：触发 bottom 的距离（px），默认`50`
+3. throttle: 事件派发的频率，默认`0`不限流，如果设置为 < 0，则不派发事件
+4. tag：指定容器的元素，默认是`div`
 
 ### events
 1. `void` @scroll-down：正在向下滚动

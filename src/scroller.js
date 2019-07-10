@@ -3,7 +3,11 @@ import { throttle as throttleFn } from 'throttle-debounce'
 export default {
   name: 'VScroller',
   props: {
-    preload: {
+    preloadTop: {
+      type: Number,
+      default: 50
+    },
+    preloadBottom: {
       type: Number,
       default: 50
     },
@@ -53,10 +57,10 @@ export default {
     handleScroll(evt) {
       const scrollTop = evt.target.scrollTop
       const isUp = this.lastScrollTop > scrollTop
-      const { $el, preload } = this
+      const { $el, preloadTop, preloadBottom } = this
       if (isUp) {
         if (scrollTop > 0) {
-          if (scrollTop < preload) {
+          if (scrollTop < preloadTop) {
             this.$emit('top')
           }
           this.$emit('scroll-up')
@@ -65,7 +69,7 @@ export default {
         if (scrollTop > 0) {
           this.$emit('scroll-down')
         }
-        if ($el.scrollHeight - $el.clientHeight - scrollTop < preload) {
+        if ($el.scrollHeight - $el.clientHeight - scrollTop < preloadBottom) {
           this.$emit('bottom')
         }
       }
