@@ -24,16 +24,15 @@ export default {
   },
   render: function(h) {
     const events = {
-      touchstart: this.handleStart
+      '&touchstart': this.handleStart,
+      '&touchmove': this.handleMove
     }
     const { throttle } = this
     if (throttle >= 0) {
       if (throttle === 0) {
         events.scroll = this.handleScroll
-        events.touchmove = this.handleMove
       } else {
         events.scroll = throttleFn(throttle, this.handleScroll)
-        events.touchmove = throttleFn(throttle, this.handleMove)
       }
     }
     return h(
@@ -78,25 +77,48 @@ export default {
       })
     },
     handleStart(evt) {
-      this.lastTouchY = evt.touches[0].pageY
-      this.fixedIOS()
+      this.lastTouchY = evt.touches ? evt.touches[0].pageY : evt.pageY
     },
     handleMove(evt) {
-      if (evt.touches[0].pageY > this.lastTouchY && this.lastScrollTop <= 0) {
-        this.$emit('top')
+      const zoom =
+        window.innerWidth / window.document.documentElement.clientWidth
+      if (evt.touches.length > 1 || zoom !== 1) {
+        return
       }
-    },
-    fixedIOS() {
-      const el = this.$el
-      let top = el.scrollTop
-      let totalScroll = el.scrollHeight
-      let currentScroll = top + el.offsetHeight
 
-      if (top === 0) {
-        el.scrollTop = 1
-      } else if (currentScroll === totalScroll) {
-        el.scrollTop = top - 1
+      let el = evt.target
+      const curY = evt.touches ? evt.touches[0].pageY : evt.pageY
+      const lastTouchY = this.lastTouchY
+      while (el !== document.body && el !== document) {
+        const style = window.getComputedStyle(el)
+        if (!style) {
+          break
+        }
+
+        if (el.nodeName === 'INPUT' && el.getAttribute('type') === 'range') {
+          return
+        }
+
+        const scrolling = style.getPropertyValue('-webkit-overflow-scrolling')
+        const overflowY = style.getPropertyValue('overflow-y')
+        const height = parseInt(style.getPropertyValue('height'), 10)
+
+        if (
+          scrolling === 'touch' &&
+          (overflowY === 'auto' || overflowY === 'scroll') &&
+          el.scrollHeight > el.offsetHeight
+        ) {
+          if (
+            (lastTouchY <= curY && el.scrollTop === 0) ||
+            (lastTouchY >= curY && el.scrollHeight - el.scrollTop === height)
+          ) {
+            evt.preventDefault()
+          }
+          return
+        }
+        el = el.parentNode
       }
+      evt.preventDefault()
     }
   }
 }
