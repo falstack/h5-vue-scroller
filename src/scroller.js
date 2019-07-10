@@ -1,4 +1,5 @@
 import { throttle as throttleFn } from 'throttle-debounce'
+import fixedIOS from './fixed'
 
 export default {
   name: 'VScroller',
@@ -26,19 +27,10 @@ export default {
       lastTouchY: 0
     }
   },
+  beforeMount() {
+    fixedIOS()
+  },
   render: function(h) {
-    const events = {
-      '&touchstart': this.handleStart,
-      '&touchmove': this.handleMove
-    }
-    const { throttle } = this
-    if (throttle >= 0) {
-      if (throttle === 0) {
-        events.scroll = this.handleScroll
-      } else {
-        events.scroll = throttleFn(throttle, this.handleScroll)
-      }
-    }
     return h(
       this.tag,
       {
@@ -48,7 +40,12 @@ export default {
           '-webkit-overflow-scrolling': 'touch'
         },
         class: 'v-scroller',
-        on: events
+        on: {
+          scroll:
+            this.throttle > 0
+              ? throttleFn(this.throttle, this.handleScroll)
+              : this.handleScroll
+        }
       },
       this.$slots.default
     )
@@ -79,63 +76,6 @@ export default {
         offsetTop: scrollTop,
         isUp
       })
-    },
-    handleStart(evt) {
-      this.lastTouchY = evt.touches ? evt.touches[0].pageY : evt.pageY
-      this.fixedIOS()
-    },
-    handleMove(evt) {
-      const zoom =
-        window.innerWidth / window.document.documentElement.clientWidth
-      if (evt.touches.length > 1 || zoom !== 1) {
-        return
-      }
-
-      let el = evt.target
-      const curY = evt.touches ? evt.touches[0].pageY : evt.pageY
-      const lastTouchY = this.lastTouchY
-      while (el !== document.body && el !== document) {
-        const style = window.getComputedStyle(el)
-        if (!style) {
-          break
-        }
-
-        if (el.nodeName === 'INPUT' && el.getAttribute('type') === 'range') {
-          return
-        }
-
-        const scrolling = style.getPropertyValue('-webkit-overflow-scrolling')
-        const overflowY = style.getPropertyValue('overflow-y')
-        const height = parseInt(style.getPropertyValue('height'), 10)
-
-        if (
-          scrolling === 'touch' &&
-          (overflowY === 'auto' || overflowY === 'scroll') &&
-          el.scrollHeight > el.offsetHeight
-        ) {
-          if (
-            (lastTouchY <= curY && el.scrollTop === 0) ||
-            (lastTouchY >= curY && el.scrollHeight - el.scrollTop === height)
-          ) {
-            evt.preventDefault()
-          }
-          return
-        }
-        el = el.parentNode
-      }
-      evt.preventDefault()
-    },
-    fixedIOS() {
-      const el = this.$el
-      let top = el.scrollTop
-      let totalScroll = el.scrollHeight
-      let currentScroll = top + el.offsetHeight
-
-      if (top === 0) {
-        el.scrollTop = 1
-      } else if (currentScroll === totalScroll) {
-        el.scrollTop = top - 1
-      }
     }
   }
 }
