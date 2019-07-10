@@ -23,6 +23,8 @@ Vue.component(VScroller.name, VScroller)
   @scroll-up="handleScrollUp"
   @top="handleScrollTop"
   @bottom="handleLoadMore"
+  @refresh="handleRefresh"
+  @refresh-end="handleRefreshEnd"
   @scroll="handleScroll({ offsetTop, isUp })"
 >
 </v-scroller>
@@ -41,3 +43,5 @@ Vue.component(VScroller.name, VScroller)
 3. `void` @top：滚动到屏幕顶部
 4. `void` @bottom：滚动到屏幕底部
 5. `object<{ offsetTop, isUp }>` @scroll 正在滚动
+6. `object<{ offset, event }>` @refresh 下拉刷新
+7. `void` @refresh-end：下拉刷新松手

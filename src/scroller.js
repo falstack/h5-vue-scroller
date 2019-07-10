@@ -28,7 +28,8 @@ export default {
   data() {
     return {
       lastScrollTop: 0,
-      lastTouchY: 0
+      lastTouchY: 0,
+      refreshing: false
     }
   },
   beforeMount() {
@@ -36,6 +37,16 @@ export default {
     fixedIOS(reg ? new RegExp(reg) : '')
   },
   render: function(h) {
+    const events = {}
+    const { throttle } = this
+    if (throttle > 0) {
+      events.scroll = throttleFn(throttle, this.handleScroll)
+    } else {
+      events.scroll = this.handleScroll
+    }
+    events.touchstart = this.handleStart
+    events.touchmove = this.handleMove
+    events.touchend = this.handleEnd
     return h(
       this.tag,
       {
@@ -45,19 +56,31 @@ export default {
           '-webkit-overflow-scrolling': 'touch'
         },
         class: 'v-scroller',
-        on: {
-          scroll:
-            this.throttle > 0
-              ? throttleFn(this.throttle, this.handleScroll)
-              : this.handleScroll
-        }
+        on: events
       },
       this.$slots.default
     )
   },
   methods: {
-    handleScroll(evt) {
-      const scrollTop = evt.target.scrollTop
+    handleStart(event) {
+      this.lastTouchY = event.touches[0].clientY
+    },
+    handleMove(event) {
+      const currentY = event.touches[0].clientY
+      const offset = this.lastTouchY - currentY
+      if (offset && event.target.scrollTop <= 0) {
+        this.refreshing = true
+        this.$emit('refresh', { event, offset })
+      }
+    },
+    handleEnd() {
+      if (this.refreshing) {
+        this.$emit('refresh-end')
+        this.refreshing = false
+      }
+    },
+    handleScroll(event) {
+      const scrollTop = event.target.scrollTop
       const isUp = this.lastScrollTop > scrollTop
       const { $el, preloadTop, preloadBottom } = this
       if (isUp) {
