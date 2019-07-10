@@ -15,7 +15,6 @@ Vue.component(VScroller.name, VScroller)
 
 ```vue
 <v-scroller
-  v-for="(item, index) in headers2"
   tag="ul"
   :preload="50"
   :throttle="0"
