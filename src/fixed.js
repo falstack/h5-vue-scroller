@@ -1,4 +1,4 @@
-export function fixed() {
+export const fixedIOS = () => {
   if (typeof window === 'undefined' || window.__ios_scroll_fixed__) {
     return
   }

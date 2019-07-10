@@ -1,5 +1,5 @@
 import { throttle as throttleFn } from 'throttle-debounce'
-import fixedIOS from './fixed'
+import { fixedIOS } from './fixed'
 
 export default {
   name: 'VScroller',
