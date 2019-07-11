@@ -19,10 +19,6 @@ export default {
     tag: {
       type: String,
       default: 'div'
-    },
-    reg: {
-      type: String,
-      default: ''
     }
   },
   data() {
@@ -33,8 +29,7 @@ export default {
     }
   },
   beforeMount() {
-    const { reg } = this
-    fixedIOS(reg ? new RegExp(reg) : '')
+    fixedIOS()
   },
   render: function(h) {
     const events = {}

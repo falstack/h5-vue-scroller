@@ -1,4 +1,4 @@
-export const fixedIOS = reg => {
+export const fixedIOS = () => {
   if (typeof window === 'undefined' || window.__ios_scroll_fixed__) {
     return
   }
@@ -34,9 +34,6 @@ export const fixedIOS = reg => {
   const handleTouchmove = function(evt) {
     // Get the element that was scrolled upon
     var el = evt.target
-    if (reg && reg.test(el.classList.value)) {
-      return
-    }
 
     // Allow zooming
     var zoom = window.innerWidth / window.document.documentElement.clientWidth
