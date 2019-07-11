@@ -1,6 +1,6 @@
 {
   "name": "h5-vue-scroller",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "main": "dist/h5-vue-scroller.umd.min.js",
   "files": [
     "dist"
