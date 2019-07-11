@@ -1,5 +1,5 @@
 import { throttle as throttleFn } from 'throttle-debounce'
-import { fixedIOS } from './fixed'
+import { fixedIOS } from './fixedIOS'
 
 export default {
   name: 'VScroller',
@@ -36,13 +36,13 @@ export default {
     const { throttle } = this
     if (throttle >= 0) {
       if (throttle > 0) {
-        events.scroll = throttleFn(throttle, this.handleScroll)
+        events['@scroll'] = throttleFn(throttle, this.handleScroll)
       } else {
-        events.scroll = this.handleScroll
+        events['@scroll'] = this.handleScroll
       }
-      events.touchstart = this.handleStart
-      events.touchmove = this.handleMove
-      events.touchend = this.handleEnd
+      events['@touchstart'] = this.handleStart
+      events['touchmove'] = this.handleMove
+      events['@touchend'] = this.handleEnd
     }
     return h(
       this.tag,
