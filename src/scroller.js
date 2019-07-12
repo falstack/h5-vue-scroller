@@ -82,7 +82,7 @@ export default {
       const { $el, preloadTop, preloadBottom } = this
       if (isUp) {
         if (scrollTop > 0) {
-          if (scrollTop < preloadTop) {
+          if (scrollTop <= preloadTop) {
             this.$emit('top')
           }
           this.$emit('scroll-up')
@@ -91,7 +91,7 @@ export default {
         if (scrollTop > 0) {
           this.$emit('scroll-down')
         }
-        if ($el.scrollHeight - $el.clientHeight - scrollTop < preloadBottom) {
+        if ($el.scrollHeight - $el.innerHeight - scrollTop <= preloadBottom) {
           this.$emit('bottom')
         }
       }
