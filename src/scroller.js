@@ -91,7 +91,7 @@ export default {
         if (scrollTop > 0) {
           this.$emit('scroll-down')
         }
-        if ($el.scrollHeight - $el.innerHeight - scrollTop <= preloadBottom) {
+        if ($el.scrollHeight - $el.clientHeight - scrollTop <= preloadBottom) {
           this.$emit('bottom')
         }
       }
