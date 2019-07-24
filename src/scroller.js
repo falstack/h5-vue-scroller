@@ -70,6 +70,9 @@ export default {
       const currentY = event.touches[0].clientY
       const offset = currentY - this.lastTouchY
       if (offset > 0 && this.lastScrollTop <= 0) {
+        if (!this.refreshing && offset < this.eventStep) {
+          return
+        }
         this.refreshing = true
         this.$emit('refresh', { event, offset })
       }
