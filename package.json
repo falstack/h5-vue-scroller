@@ -1,6 +1,6 @@
 {
   "name": "h5-vue-scroller",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "main": "dist/h5-vue-scroller.umd.min.js",
   "files": [
     "dist"
@@ -22,15 +22,16 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
-    "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/cli-plugin-babel": "^3.9.2",
+    "@vue/cli-plugin-eslint": "^3.9.2",
     "@vue/cli-plugin-unit-jest": "^3.9.0",
+    "@vue/cli-service": "^3.9.3",
+    "@vue/eslint-config-prettier": "^5.0.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
-    "core-js": "^2.6.5",
-    "eslint": "^5.16.0",
+    "core-js": "^3.1.4",
+    "eslint": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
   }

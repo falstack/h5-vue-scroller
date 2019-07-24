@@ -12,6 +12,10 @@ export default {
       type: Number,
       default: 50
     },
+    eventStep: {
+      type: Number,
+      default: 1
+    },
     throttle: {
       type: Number,
       default: 0
@@ -78,11 +82,12 @@ export default {
     },
     handleScroll(event) {
       const scrollTop = event.target.scrollTop
-      const isUp = this.lastScrollTop > scrollTop
-      const { $el, preloadTop, preloadBottom } = this
+      const { $el, preloadTop, preloadBottom, eventStep, lastScrollTop } = this
+      const delta = lastScrollTop - scrollTop
+      const isUp = delta > 0
       if (isUp) {
         if (scrollTop > 0) {
-          if (scrollTop <= preloadTop) {
+          if (scrollTop <= preloadTop && delta >= eventStep) {
             this.$emit('top')
           }
           this.$emit('scroll-up')
@@ -91,7 +96,10 @@ export default {
         if (scrollTop > 0) {
           this.$emit('scroll-down')
         }
-        if ($el.scrollHeight - $el.clientHeight - scrollTop <= preloadBottom) {
+        if (
+          $el.scrollHeight - $el.clientHeight - scrollTop <= preloadBottom &&
+          delta + eventStep <= 0
+        ) {
           this.$emit('bottom')
         }
       }
