@@ -45,7 +45,7 @@ export default {
         events['&scroll'] = this.handleScroll
       }
       events['&touchstart'] = this.handleStart
-      events['touchmove'] = this.handleMove
+      events['&touchmove'] = this.handleMove
       events['&touchend'] = this.handleEnd
     }
     return h(
@@ -99,10 +99,7 @@ export default {
         if (scrollTop > 0) {
           this.$emit('scroll-down')
         }
-        if (
-          $el.scrollHeight - $el.clientHeight - scrollTop <= preloadBottom &&
-          delta + eventStep <= 0
-        ) {
+        if ($el.scrollHeight - $el.clientHeight - scrollTop <= preloadBottom) {
           this.$emit('bottom')
         }
       }
