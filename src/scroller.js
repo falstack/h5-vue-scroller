@@ -85,12 +85,11 @@ export default {
     },
     handleScroll(event) {
       const scrollTop = event.target.scrollTop
-      const { $el, preloadTop, preloadBottom, eventStep, lastScrollTop } = this
-      const delta = lastScrollTop - scrollTop
+      const delta = this.lastScrollTop - scrollTop
       const isUp = delta > 0
       if (isUp) {
         if (scrollTop > 0) {
-          if (scrollTop <= preloadTop && delta >= eventStep) {
+          if (scrollTop <= this.preloadTop && delta >= this.eventStep) {
             this.$emit('top')
           }
           this.$emit('scroll-up')
@@ -99,7 +98,11 @@ export default {
         if (scrollTop > 0) {
           this.$emit('scroll-down')
         }
-        if ($el.scrollHeight - $el.clientHeight - scrollTop <= preloadBottom) {
+        const el = this.$el
+        if (
+          el.scrollHeight - el.clientHeight - scrollTop <=
+          this.preloadBottom
+        ) {
           this.$emit('bottom')
         }
       }
