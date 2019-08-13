@@ -1,5 +1,5 @@
 import { throttle as throttleFn } from 'throttle-debounce'
-import { fixedIOS } from './fixedIOS'
+import fixedIOS from './fixedIOS'
 
 export default {
   name: 'VScroller',
@@ -33,7 +33,10 @@ export default {
     }
   },
   beforeMount() {
-    fixedIOS()
+    fixedIOS.open()
+  },
+  beforeDestroy() {
+    fixedIOS.close()
   },
   render: function(h) {
     const events = {}

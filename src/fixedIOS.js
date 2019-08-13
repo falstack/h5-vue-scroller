@@ -1,9 +1,11 @@
-export const fixedIOS = () => {
-  if (typeof window === 'undefined' || window.__ios_scroll_fixed__) {
-    return
+const fixedIOS = () => {
+  const noop = {
+    open: () => {},
+    close: () => {}
   }
-
-  window.__ios_scroll_fixed__ = true
+  if (typeof window === 'undefined') {
+    return noop
+  }
 
   const testDiv = document.createElement('div')
   document.documentElement.appendChild(testDiv)
@@ -13,7 +15,7 @@ export const fixedIOS = () => {
     window.getComputedStyle(testDiv)['-webkit-overflow-scrolling'] === 'touch'
   document.documentElement.removeChild(testDiv)
   if (!scrollSupport) {
-    return
+    return noop
   }
 
   let startY = 0
@@ -98,14 +100,33 @@ export const fixedIOS = () => {
     startY = evt.touches ? evt.touches[0].screenY : evt.screenY
   }
 
-  window.addEventListener(
-    'touchstart',
-    handleTouchstart,
-    supportsPassiveOption ? { passive: false } : false
-  )
-  window.addEventListener(
-    'touchmove',
-    handleTouchmove,
-    supportsPassiveOption ? { passive: false } : false
-  )
+  const open = () => {
+    if (window.__ios_scroll_fixed__) {
+      return
+    }
+    window.addEventListener(
+      'touchstart',
+      handleTouchstart,
+      supportsPassiveOption ? { passive: false } : false
+    )
+    window.addEventListener(
+      'touchmove',
+      handleTouchmove,
+      supportsPassiveOption ? { passive: false } : false
+    )
+    window.__ios_scroll_fixed__ = true
+  }
+
+  const close = () => {
+    window.removeEventListener('touchstart', handleTouchstart, false)
+    window.removeEventListener('touchmove', handleTouchmove, false)
+    window.__ios_scroll_fixed__ = false
+  }
+
+  return {
+    open,
+    close
+  }
 }
+
+export default fixedIOS()
