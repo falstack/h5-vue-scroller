@@ -43,7 +43,7 @@ Vue.component(VScroller.name, VScroller)
 2. preload-bottom：触发 bottom 的距离（px），默认`50`
 3. throttle: 事件派发的频率，默认`0`不限流，如果设置为 < 0，则不派发事件
 4. tag：指定容器的元素，默认是`div`
-5. event-step：事件触发的步长（px），大于这个步长才会 emit`top`, *第一次*的`refresh` 事件
+5. event-step：事件触发的步长（px），大于这个步长才会 emit`top`和**第一次**的`refresh` 事件
 
 ## Events
 1. `void` @scroll-down：正在向下滚动
