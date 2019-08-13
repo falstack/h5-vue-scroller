@@ -39,20 +39,20 @@ Vue.component(VScroller.name, VScroller)
 ```
 
 ## Props
-1. preload-top：触发 top 的距离（px），默认`50`
-2. preload-bottom：触发 bottom 的距离（px），默认`50`
-3. throttle: 事件派发的频率，默认`0`不限流，如果设置为 < 0，则不派发事件
-4. tag：指定容器的元素，默认是`div`
-5. event-step：事件触发的步长（px），大于这个步长才会 emit`top`和**第一次**的`refresh` 事件
+- preload-top：触发 top 的距离（px），默认`50`
+- preload-bottom：触发 bottom 的距离（px），默认`50`
+- throttle: 事件派发的频率，默认`0`不限流，如果设置为 < 0，则不派发事件
+- tag：指定容器的元素，默认是`div`
+- event-step：事件触发的步长（px），大于这个步长才会 emit`top`和**第一次**的`refresh` 事件
 
 ## Events
-1. `void` @scroll-down：正在向下滚动
-2. `void` @scroll-up：正在向上滚动
-3. `void` @top：滚动到屏幕顶部
-4. `void` @bottom：滚动到屏幕底部
-5. `object<{ offsetTop, isUp }>` @scroll 正在滚动
-6. `object<{ offset, event }>` @refresh 下拉刷新
-7. `void` @refresh-end：下拉刷新松手
+- `void` @scroll-down：正在向下滚动
+- `void` @scroll-up：正在向上滚动
+- `void` @top：滚动到屏幕顶部
+- `void` @bottom：滚动到屏幕底部
+- `object<{ offsetTop, isUp }>` @scroll 正在滚动
+- `object<{ offset, event }>` @refresh 下拉刷新
+- `void` @refresh-end：下拉刷新松手
 
 
 ## Author
