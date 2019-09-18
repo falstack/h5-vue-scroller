@@ -38,33 +38,6 @@ export default {
   beforeDestroy() {
     fixedIOS.close()
   },
-  render: function(h) {
-    const events = {}
-    const { throttle } = this
-    if (throttle >= 0) {
-      if (throttle > 0) {
-        events['&scroll'] = throttleFn(throttle, this.handleScroll)
-      } else {
-        events['&scroll'] = this.handleScroll
-      }
-      events['&touchstart'] = this.handleStart
-      events['&touchmove'] = this.handleMove
-      events['&touchend'] = this.handleEnd
-    }
-    return h(
-      this.tag,
-      {
-        style: {
-          height: '100%',
-          'overflow-y': 'auto',
-          '-webkit-overflow-scrolling': 'touch'
-        },
-        class: 'v-scroller',
-        on: events
-      },
-      this.$slots.default
-    )
-  },
   methods: {
     handleStart(event) {
       this.lastTouchY = event.touches[0].clientY
@@ -91,16 +64,14 @@ export default {
       const delta = this.lastScrollTop - scrollTop
       const isUp = delta > 0
       if (isUp) {
-        if (scrollTop > 0) {
-          if (scrollTop <= this.preloadTop && delta >= this.eventStep) {
-            this.$emit('top')
-          }
-          this.$emit('scroll-up')
+        if (
+          scrollTop >= 0 &&
+          scrollTop <= this.preloadTop &&
+          delta >= this.eventStep
+        ) {
+          this.$emit('top')
         }
       } else {
-        if (scrollTop > 0) {
-          this.$emit('scroll-down')
-        }
         const el = this.$el
         if (
           el.scrollHeight - el.clientHeight - scrollTop <=
@@ -116,5 +87,32 @@ export default {
         isUp
       })
     }
+  },
+  render(h) {
+    const events = {}
+    const { throttle } = this
+    if (throttle >= 0) {
+      if (throttle > 0) {
+        events['&scroll'] = throttleFn(throttle, this.handleScroll)
+      } else {
+        events['&scroll'] = this.handleScroll
+      }
+      events['&touchstart'] = this.handleStart
+      events['&touchmove'] = this.handleMove
+      events['&touchend'] = this.handleEnd
+    }
+    return h(
+      this.tag,
+      {
+        style: {
+          height: '100%',
+          'overflow-y': 'auto',
+          '-webkit-overflow-scrolling': 'touch'
+        },
+        class: 'v-scroller',
+        on: events
+      },
+      this.$slots.default
+    )
   }
 }

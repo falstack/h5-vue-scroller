@@ -26,8 +26,6 @@ Vue.component(VScroller.name, VScroller)
   :preload-bottom="50"
   :throttle="0"
   :event-step="1"
-  @scroll-down="handleScrollDown"
-  @scroll-up="handleScrollUp"
   @top="handleScrollTop"
   @bottom="handleLoadMore"
   @refresh="handleRefresh({ offset, event })"
@@ -46,8 +44,6 @@ Vue.component(VScroller.name, VScroller)
 - event-step：事件触发的步长（px），大于这个步长才会 emit`top`和**第一次**的`refresh` 事件
 
 ## Events
-- `void` @scroll-down：正在向下滚动
-- `void` @scroll-up：正在向上滚动
 - `void` @top：滚动到屏幕顶部
 - `void` @bottom：滚动到屏幕底部
 - `object<{ offsetTop, isUp }>` @scroll 正在滚动

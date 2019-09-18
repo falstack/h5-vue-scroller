@@ -1,6 +1,6 @@
 {
   "name": "h5-vue-scroller",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/h5-vue-scroller.umd.min.js",
   "files": [
     "dist"
@@ -29,8 +29,8 @@
     "@vue/eslint-config-prettier": "^5.0.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
-    "core-js": "^3.1.4",
-    "eslint": "^6.2.2",
+    "core-js": "^3.2.1",
+    "eslint": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
